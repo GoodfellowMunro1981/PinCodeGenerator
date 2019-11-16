@@ -39,7 +39,7 @@ namespace WebApplication.Controllers.Tests
         }
 
         [TestMethod()]
-        public void CheckInvlaidPinNumbersNotGenerated()
+        public void CheckInvalidPinNumbersNotGenerated()
         {
             // ARRANGE
 
@@ -47,11 +47,13 @@ namespace WebApplication.Controllers.Tests
             var numbers = controller.Numbers;
 
             // ASSERT
+            Assert.IsFalse(numbers.Contains(-1));
             Assert.IsFalse(numbers.Contains(10000));
+            Assert.IsFalse(numbers.Contains(10001));
         }
 
         [TestMethod()]
-        public void CheckErrorMessageReturnedAfterAllPinsDisplayed()
+        public void CheckEmptyStringReturnedAfterAllPinsDisplayed()
         {
             // ARRANGE
             int i = 0;
@@ -65,7 +67,7 @@ namespace WebApplication.Controllers.Tests
             var pin = controller.GetRandomPin();
 
             // ASSERT
-            Assert.AreEqual(default(string), pin);
+            Assert.AreEqual(default, pin);
         }
     }
 }

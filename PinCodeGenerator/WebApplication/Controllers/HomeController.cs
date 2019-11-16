@@ -10,6 +10,7 @@ namespace WebApplication.Controllers
 {
     public class HomeController : Controller
     {
+        #region Properties
         private IMemoryCache cache;
 
         public IEnumerable<int> Numbers
@@ -42,27 +43,20 @@ namespace WebApplication.Controllers
                 }
             }
         }
+        #endregion
 
+        #region Constructor
         public HomeController()
         {
             cache = new MemoryCache(new MemoryCacheOptions());
             EnsureNumberPopulated();
         }
+        #endregion
 
+        #region Actions
         public IActionResult Index()
         {
             return View();
-        }
-
-        public void EnsureNumberPopulated()
-        {
-            if (Numbers == null)
-            {
-                var start = 0;
-                var count = 10000;
-                Numbers = Enumerable.Range(start, count);
-                Padding = "D4";
-            }
         }
 
         public IActionResult GetPin()
@@ -71,7 +65,7 @@ namespace WebApplication.Controllers
             var pin = GetRandomPin();
             var message = default(string);
 
-            if(string.IsNullOrEmpty(pin))
+            if (string.IsNullOrEmpty(pin))
             {
                 success = false;
                 message = "All pins generated have been displayed.";
@@ -91,6 +85,8 @@ namespace WebApplication.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        #endregion
+
         public string GetRandomPin()
         {
             if (TryGetUniqueNumberFromEnumerable(out int number))
@@ -102,6 +98,17 @@ namespace WebApplication.Controllers
         }
 
         #region private helpers
+        private void EnsureNumberPopulated()
+        {
+            if (Numbers == null)
+            {
+                var start = 0;
+                var count = 10000;
+                Numbers = Enumerable.Range(start, count);
+                Padding = "D4";
+            }
+        }
+
         private bool TryGetUniqueNumberFromEnumerable(out int number)
         {
             var random = new Random();
