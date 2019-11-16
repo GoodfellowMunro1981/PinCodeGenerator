@@ -6,6 +6,22 @@
 
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\ajax.ts" />
+    <Content Remove="wwwroot\js\index.ts" />
+    <Content Remove="wwwroot\js\site.ts" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\typings\jquery\" />
   </ItemGroup>
 
 </Project>

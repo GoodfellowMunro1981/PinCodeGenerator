@@ -36,56 +36,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var PinGenerator;
 (function (PinGenerator) {
-    var site;
-    $(document).ready(function () {
-        site = new Site();
-    });
-    var Site = /** @class */ (function () {
-        function Site() {
-            this._init();
+    var Ajax = /** @class */ (function () {
+        function Ajax() {
         }
-        Site.prototype._init = function () {
-            this._element = $('#PinGenerator');
-            this._newPin = this._element.find('.new-pin');
-            this._pinDisplay = this._element.find('.generated-pin');
-            this._ajax = new PinGenerator.Ajax();
-            this._setEvents();
-        };
-        Site.prototype._setEvents = function () {
-            var _this = this;
-            this._newPin.click(function (e) { return _this._getNewPin(); });
-        };
-        Site.prototype._getNewPin = function () {
+        Ajax.prototype.ajax = function (options) {
             return __awaiter(this, void 0, void 0, function () {
-                var ajaxOptions, response, displayValue;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0:
-                            this._pinDisplay.val("Generating Pin");
-                            ajaxOptions = {
-                                url: "Home/GetPin",
-                                data: {
-                                    name: name
-                                }
-                            };
-                            return [4 /*yield*/, this._ajax.ajax(ajaxOptions)];
-                        case 1:
-                            response = _a.sent();
-                            displayValue = "Error";
-                            if (response.success) {
-                                displayValue = response.pin;
-                            }
-                            else if (response.message != null && response.message.length > 0) {
-                                displayValue = response.message;
-                            }
-                            this._pinDisplay.val(displayValue);
-                            return [2 /*return*/];
+                        case 0: return [4 /*yield*/, this._sendRequest(options)];
+                        case 1: return [2 /*return*/, _a.sent()];
                     }
                 });
             });
         };
-        return Site;
+        Ajax.prototype._sendRequest = function (options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var result;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, $.ajax({
+                                url: options.url,
+                                type: "POST",
+                                data: options.data,
+                                cache: false,
+                                success: function (data) {
+                                    return data;
+                                },
+                                error: function (result) {
+                                    // handle error with dialog to notify user
+                                }
+                            })];
+                        case 1:
+                            result = _a.sent();
+                            return [2 /*return*/, result];
+                    }
+                });
+            });
+        };
+        return Ajax;
     }());
-    PinGenerator.Site = Site;
+    PinGenerator.Ajax = Ajax;
 })(PinGenerator || (PinGenerator = {}));
-//# sourceMappingURL=site.js.map
+//# sourceMappingURL=ajax.js.map
